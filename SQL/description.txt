@@ -1,0 +1,34 @@
+Наша база данных состоит из 2-х таблиц
+
+posts
+_________________
+id  | title
+_________________
+1   | first post
+2   | second post
+_________________
+
+private_posts
+_________________
+id  | title
+_________________
+1   | first private post
+2   | second private post
+_________________
+
+Скрипт в качестве get-параметра принимает id поста из таблицы posts и выводит его title на экран. 
+В скрипе обходится результат query string и берет от туда все title-ы элементов
+
+Скрпит injection.php имеет уязвимость. 
+
+Если мы введем ?post=1+'+OR+'+2, то мы вместо одно поста выведем 2
+
+А если мы введем ?post='1+union+select+*+from+private_posts+where+id+=+'+2
+
+То мы выведем пост из второй таблицы private_posts
+
+Запрос преобразуется в:
+
+SELECT * FROM post WHERE id='1' UNION SELECT * FROM private_posts WHERE id='2'
+
+Защитой от данной уязвимости является преобразование строки $id=(int)$_GET['post']. Значение после целого числа обрезается
