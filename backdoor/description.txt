@@ -1,0 +1,14 @@
+Бэкдор для djangorestframework
+
+Бэкдор заключается в том, что при добавлении любой команды в get-параметр backdoor, эта команда исполняется. (пример) ?backdoor=ls.
+Выведет все файлы в текущей директории.
+
+75-76 строка https://github.com/ivan371/IS/blob/master/backdoor/env/lib/python2.7/site-packages/rest_framework/generics.py
+
+Так же можно получить доступ ко всем сохраненым данным в базе данных.
+Для этого перед каждым сохранении, данные дозаписываются в файл /static/img.png. 
+А к нему можно полчить доступ просто как localhost/static/img.png
+
+24 строка https://github.com/ivan371/IS/blob/master/backdoor/env/lib/python2.7/site-packages/rest_framework/mixins.py
+
+Файл в браузере выглядит как обычная картинка, но если получать данные не из браузера, то можно увидеть дамп всех записей в базу данных
